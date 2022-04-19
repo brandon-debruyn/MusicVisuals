@@ -1,8 +1,8 @@
 # Music Visualiser Project
 
-Name:
+Name: Brandon Lee De Bruyn
 
-Student Number: 
+Student Number: D20123654
 
 ## Instructions
 - Fork this repository and use it a starter project for your assignment
