@@ -96,7 +96,13 @@ public class SceneHandler extends Visual {
             shape.display();
         }
 
+        calculateFrequencyBands();
 
+        for(int i=0; i<getSmoothedBands().length; i++) {
+            if(getSmoothedBands()[i] > 45) {
+                
+            }
+        }
         
 
     }
