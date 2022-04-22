@@ -1,9 +1,5 @@
 package D20123654;
 
-import java.util.Vector;
-
-import javax.print.attribute.standard.MediaSize.Other;
-
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -25,8 +21,11 @@ public class SphereParticles {
         position = new PVector(x, y);
         PVector dir = PVector.sub(shape.position, position);
         
+        
         velocity = new PVector(1.5f * dir.normalize().x, 1.5f * dir.normalize().y);
         velocity.mult(5);
+        
+        //velocity = new PVector(0, 0);
 
         radius = r;
     }
@@ -37,6 +36,14 @@ public class SphereParticles {
 
     public float getParticleKE_Yi() {
         return(0.5f * (1) * (velocity.y));
+    }
+
+    public void activate() {
+        PVector dir = PVector.sub(shape.position, position);
+        velocity.x = 1.5f * dir.normalize().x;
+        velocity.y = 1.5f * dir.normalize().y;
+        velocity.mult(5);
+        
     }
 
     public void checkCollision() {
@@ -103,9 +110,19 @@ public class SphereParticles {
 
     public void display() {
         
-        //sc.noFill();
+        float c = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.06f, 0, 255);
+        
+        sc.fill(c, 255,255);
         sc.ellipseMode(PApplet.CENTER);
         sc.ellipse(position.x, position.y, radius, radius );
+        
+        sc.stroke(c, 255, 255);
+
+        for(int i=0; i<sc.getAudioBuffer().size(); i++) {
+            float lines = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.06f, 40, 150);;
+            sc.line(position.x, position.y, position.x + sc.random(-lines, lines),position.y + sc.random(-lines, lines));
+
+        }
     }
 
 }

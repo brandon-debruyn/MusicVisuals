@@ -16,11 +16,15 @@ public class MorphShape {
         this.sc = sc;
     }
 
+
     
     public void display() {
-        
-        
-        //sc.noFill();
+        //sc.calculateAverageAmplitude();
+        float c = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.05f, 0, 255);
+
+        sc.fill(c, 255,255);
+        //sc.stroke(c, 255,255);
+        //sc.noStroke();
         sc.ellipseMode(PApplet.CENTER);
         sc.ellipse(position.x, position.y, radius, radius);
     }

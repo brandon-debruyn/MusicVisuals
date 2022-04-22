@@ -6,19 +6,23 @@ import ddf.minim.analysis.FFT;
 
 public class SceneHandler extends Visual {
 
-    int mode = 0;
+    int mode = 1;
+    boolean paused = false;
 
     float[] lerpedBuffer;
     float y = 0;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
-    int num_particles = 15;
+    int num_particles = 20;
     float radius = 400;
+    float particleR = 12;
 
     float halfH = height / 2;
 
     SphereParticles[] particles = new SphereParticles[num_particles];
     MorphShape shape;
+    GenerativeTerrain terr;
+    
     
     public void settings() {
         size(800, 800, P3D);
@@ -31,79 +35,138 @@ public class SceneHandler extends Visual {
         loadAudio("myMusic.mp3");
 
         colorMode(HSB);
-    
+        terr = new GenerativeTerrain(this);
+        
         //noCursor();
         
         lerpedBuffer = new float[width];
-        int posx = 120;
-
+        int posx = width / num_particles;
+        
         shape = new MorphShape(width / 2, height / 2, radius, this);
 
         for(int i=0; i<num_particles; i++) {
-            if(i <= 8) {
-                particles[i] = new SphereParticles(posx, 0.0f, 40, this, shape);
-                posx += 60;
+            if(i <= num_particles / 2) {
+                particles[i] = new SphereParticles(posx, 0.0f, particleR, this, shape);
+                posx += 2 * (width / num_particles);
             }
             else {
                 
-                particles[i] = new SphereParticles(posx, height, 40, this, shape);
-                posx -= 120;
+                particles[i] = new SphereParticles(posx, height, particleR, this, shape);
+                posx -= 2 * (width / num_particles);
             }
         }
+        
+
+        
         
         
     }
     
     public void keyPressed()
     {
-        if (key == ' ')
+        if (key >= '0' && key <= '4') {
+			mode = key - '0';
+		}
+        switch(key)
         {
-            getAudioPlayer().cue(0);
-            getAudioPlayer().play();
-        }
+            case ' ':
+            {
+                if(paused)
+                {
+                    getAudioPlayer().play();
+                    paused = false;
+                }
+                else
+                {
+                    getAudioPlayer().pause();
+                    paused = true;
+                }
+                break;
+            }
+
+            case '1':
+            {
+                getAudioPlayer().cue(0);
+                getAudioPlayer().play();
+                break;
+
+            }
+
+            case '2':
+            {
+                getAudioPlayer().cue(22500);
+                getAudioPlayer().play();
+                break;
+            }
+
+            case '3':
+            {
+                getAudioPlayer().cue(112000);
+                getAudioPlayer().play();
+                break;
+            }
+
+            case '4':
+            {
+                getAudioPlayer().cue(162000);
+                getAudioPlayer().play();
+                break;
+            }
+            
+         }
     }
 
-    
+    int p = 0;
 
     public void draw() {
         //(\sqrt{(\sqrt{(x*\sin(b)+a*\cos(b))^{2}+(y*\cos(d)-c*\sin(d))^{2}}-4)^{2}+(y*\sin(d)+c*\cos(d))^{2}}-2)^{2}+(x*\cos(b)-a*\sin(b))^{2}=1
-        background(0);
-
+        
+        
         getFFT().window(FFT.HAMMING);
         getFFT().forward(getAudioBuffer());
+       
+        
+        switch(mode)
+        {
+            case 1: {
+                getAudioPlayer().play();
 
+                //background(0);
 
-        int k = 0;
-
-        for(int i=0; i<num_particles; i++) {
-            particles[i].updateV();
-            particles[i].display();
-            particles[i].checkCollision();
-        }
-
-        calculateAverageAmplitude();
-        float c = map(getSmoothedAmplitude(), 0, 0.08f, 0, 255);
-
-        for(int i=0; i<getAudioBuffer().size(); i++) {
-            
-            
-            //noFill();
-            //noStroke();
-            fill(c, 255,255);
-
-            float newRadius = map(getSmoothedAmplitude(), 0, 0.1f, 100, 210);
-            shape.radius = newRadius;
-            shape.display();
-        }
-
-        calculateFrequencyBands();
-
-        for(int i=0; i<getSmoothedBands().length; i++) {
-            if(getSmoothedBands()[i] > 45) {
+                calculateAverageAmplitude();
                 
+                for(int i=0; i<getAudioBuffer().size(); i++) {
+                    
+                    float newRadius = map(getSmoothedAmplitude(), 0, 0.1f, 70, 255);
+                    shape.radius = newRadius;
+                    shape.display();
+                    
+                }
+
+                calculateFrequencyBands();
+
+                for(int j=0; j<num_particles; j++) {
+                    particles[j].updateV();
+                    particles[j].display();
+                    particles[j].checkCollision();
+                    
+                }
+                break;
+            }
+            case 2: {
+                background(0);
+                terr.display();
+                break;
+            }
+            case 3: {
+               
+                break;
+            }
+            case 4: {
+                
+                break;
             }
         }
-        
 
     }
 }
