@@ -13,6 +13,7 @@ public class SphereParticles {
     MorphShape shape;
 
     float radius;
+    float angle;
     
     public SphereParticles(float x, float y, float r, SceneHandler sc, MorphShape shape) {
         this.shape = shape;
@@ -114,15 +115,20 @@ public class SphereParticles {
         
         sc.fill(c, 255,255);
         sc.ellipseMode(PApplet.CENTER);
-        sc.ellipse(position.x, position.y, radius, radius );
+        float newRadius = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.1f, radius, radius * 6);
+        sc.ellipse(position.x, position.y, newRadius, newRadius );
         
         sc.stroke(c, 255, 255);
 
         for(int i=0; i<sc.getAudioBuffer().size(); i++) {
-            float lines = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.06f, 40, 150);;
-            sc.line(position.x, position.y, position.x + sc.random(-lines, lines),position.y + sc.random(-lines, lines));
-
+            float lines = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.06f, 0, 100);
+            sc.line(position.x, position.y, PApplet.cos(position.x +  lines),PApplet.cos(position.y + lines));
+            sc.line(position.x, position.y, sc.width + PApplet.cos(position.x +  lines), sc.width + PApplet.cos(position.y + lines));
+            sc.line(position.x, position.y, sc.width + PApplet.cos(position.x +  lines),  PApplet.cos(position.y + lines));
+            sc.line(position.x, position.y, PApplet.cos(position.x +  lines), sc.height + PApplet.cos(position.y + lines));
+            
         }
+        
     }
 
 }

@@ -13,7 +13,7 @@ public class SceneHandler extends Visual {
     float y = 0;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
-    int num_particles = 20;
+    int num_particles = 10;
     float radius = 400;
     float particleR = 12;
 
@@ -21,8 +21,7 @@ public class SceneHandler extends Visual {
 
     SphereParticles[] particles = new SphereParticles[num_particles];
     MorphShape shape;
-    GenerativeTerrain terr;
-    
+    JuliaGen terr;
     
     public void settings() {
         size(800, 800, P3D);
@@ -35,7 +34,7 @@ public class SceneHandler extends Visual {
         loadAudio("myMusic.mp3");
 
         colorMode(HSB);
-        terr = new GenerativeTerrain(this);
+        terr = new JuliaGen(this);
         
         //noCursor();
         
@@ -131,17 +130,13 @@ public class SceneHandler extends Visual {
             case 1: {
                 getAudioPlayer().play();
 
-                //background(0);
-
-                calculateAverageAmplitude();
+                background(0);
                 
-                for(int i=0; i<getAudioBuffer().size(); i++) {
-                    
-                    float newRadius = map(getSmoothedAmplitude(), 0, 0.1f, 70, 255);
+                calculateAverageAmplitude();
+                float newRadius = map(getSmoothedAmplitude(), 0, 0.1f, 70, 255);
                     shape.radius = newRadius;
                     shape.display();
-                    
-                }
+               
 
                 calculateFrequencyBands();
 
@@ -154,7 +149,7 @@ public class SceneHandler extends Visual {
                 break;
             }
             case 2: {
-                background(0);
+                // background(0);
                 terr.display();
                 break;
             }
