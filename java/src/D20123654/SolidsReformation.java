@@ -10,53 +10,65 @@ public class SolidsReformation {
     
     SceneHandler sc;
 
-    float a = 20;
+    float a = 150;
     float angle = 0;
-    float[][] terrain;
-    
+    PVector g;
+    float n = 0;
+    float c = 4;
+    float sphereR = 20;
 
     public SolidsReformation(SceneHandler sc) {
         this.sc = sc;
-        this.terrain = new float[sc.width][sc.height];
+        
     }
 
-    public void display() {
-        
-        
+    
+    public void setup() {
+    
+    }
 
+    public void display() {        
+        
+        
+        sc.calculateAverageAmplitude();
         sc.background(0);
-        sc.stroke(255,255,255);
-        sc.noFill();
-
-        sc.translate(sc.width/2, sc.height/2);
-        sc.rotateX(PApplet.PI / 3);
-
-        
-        sc.translate(-sc.width / 2, -sc.height/2);
-        /*
-        x = u - u^3 / 3 + u v^2
-        y = v - v^3 / 3 + v u^2
-        z = u^2 - v^2
-        -2 <= u <= 2, -2 <= v <= 2 
-        */
         
         for(int i=0; i< sc.width / a;i ++) {
             
-            float v = PApplet.map(i, 0, sc.width/a, -PApplet.PI, PApplet.PI);
+            sc.pushMatrix();
+            
+            sc.translate(sc.width / 2, sc.height/2);
+            sc.lights(); 
+            
+            sc.noFill();
+            sc.stroke(sc.frameCount % 255, 255,255);
+            
 
-            for(int j=0; j<sc.height /a ; j++) {
-                float u = PApplet.map(j, 0, sc.height/a, -PApplet.PI, PApplet.PI);
-                float o = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.06f, 1, 250);
-
-                float x = 2 * o * PApplet.sin(3 * u) / 2 + PApplet.cos(v);
-                float y = 2 * o *(PApplet.sin(u) + 2 * PApplet.sin(2 * u)) / (2 + PApplet.cos(v + 2 * PApplet.PI/3));
-                float z = o * (PApplet.cos(u) - 2 * PApplet.cos(2 * u)) * (2 + PApplet.cos(v + 2 * PApplet.PI /3)) / 4;
-
-                sc.point(x * a , y * a, z * a );
+            sc.stroke(sc.random(0, 255),255,255);
+            sc.strokeWeight(2);
+            sc.noFill();
                 
-
+            for(int j=0; j<sc.height /a ; j++) {
+                
+                float az = (n % 500) * 137.6f;
+                float r = c * PApplet.sqrt(n);
+                float x = r * PApplet.cos(az); 
+                float y = r * PApplet.sin(az); 
+                
+                float rad = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.8f, 0, 200);
+                
+                sc.ellipse(x,  y, rad, rad);
+                sc.rect(x, y, x + (rad / 10), y + (rad / 10));
+                sc.line(x, y,  PApplet.cos(x + rad), PApplet.cos(y + rad));
+     
+                n += 0.1f;
             }
             
+            sc.popMatrix();
         }
+        
+        angle += 0.0055f;
+        
+        
     }
 }

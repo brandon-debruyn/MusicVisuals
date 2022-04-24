@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "e:\\UNI\\processing-video-master\\library\\gst1-java-core-1.4.0.jar",
+        "e:\\UNI\\processing-video-master\\library\\jna.jar"
+    ]
+}

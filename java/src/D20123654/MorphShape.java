@@ -29,6 +29,7 @@ public class MorphShape {
 
         sc.rotateX(angle);
         sc.rotateZ(angle);
+        
         sc.sphere(radius);
 
         sc.popMatrix();

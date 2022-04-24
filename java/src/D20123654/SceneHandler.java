@@ -135,7 +135,7 @@ public class SceneHandler extends Visual {
                 background(0);
                 
                 calculateAverageAmplitude();
-                float newRadius = map(getSmoothedAmplitude(), 0, 0.1f, 70, 255);
+                float newRadius = map(getSmoothedAmplitude(), 0, 0.6f, 70, 255);
                     shape.radius = newRadius;
                     shape.display();
                
@@ -156,6 +156,7 @@ public class SceneHandler extends Visual {
                 break;
             }
             case 3: {
+                //background(0);
                 solid.display();
                 break;
             }

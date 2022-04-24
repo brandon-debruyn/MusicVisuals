@@ -53,6 +53,7 @@ public class SphereParticles {
         float distVectMag = distVect.mag();
         float pointOfCol = radius + shape.radius;
 
+        // centre shape <-> particle lossion handling
         if(distVectMag < pointOfCol) {
             PVector distVect2 = distVect.copy();
             float distCor = ((pointOfCol-distVectMag)/2.0f);
@@ -79,7 +80,7 @@ public class SphereParticles {
             }
 
         }
-
+        // border collision
         if (position.x > sc.width-radius) {
 
             position.x = sc.width-radius;
@@ -87,19 +88,19 @@ public class SphereParticles {
         } 
         else if (position.x < radius) {
 
-        position.x = radius;
-        velocity.x *= -1;
+            position.x = radius;
+            velocity.x *= -1;
         } 
         else if (position.y > sc.height-radius) {
 
-        position.y = sc.height-radius;
-        velocity.y *= -1;
+            position.y = sc.height-radius;
+            velocity.y *= -1;
 
         } 
         else if (position.y < radius) {
 
-        position.y = radius;
-        velocity.y *= -1;
+            position.y = radius;
+            velocity.y *= -1;
 
         }
         
