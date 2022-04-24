@@ -76,7 +76,7 @@ public class JuliaGen {
                 */
                 
                 float zx = (float) (1.5 * (i - sc.width / 2) / (0.5  * sc.width));
-                float zy = (float) ((j - sc.height / 2) / (0.5  * sc.height));
+                float zy =  (float) ((j - sc.height / 2) / (0.5  * sc.height));
                 
                 
                 float x = 0;

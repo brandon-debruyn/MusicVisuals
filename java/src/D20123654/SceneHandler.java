@@ -22,6 +22,7 @@ public class SceneHandler extends Visual {
     SphereParticles[] particles = new SphereParticles[num_particles];
     MorphShape shape;
     JuliaGen terr;
+    SolidsReformation solid;
     
     public void settings() {
         size(800, 800, P3D);
@@ -42,6 +43,7 @@ public class SceneHandler extends Visual {
         int posx = width / num_particles;
         
         shape = new MorphShape(width / 2, height / 2, radius, this);
+        solid = new SolidsReformation(this);
 
         for(int i=0; i<num_particles; i++) {
             if(i <= num_particles / 2) {
@@ -154,7 +156,7 @@ public class SceneHandler extends Visual {
                 break;
             }
             case 3: {
-               
+                solid.display();
                 break;
             }
             case 4: {
