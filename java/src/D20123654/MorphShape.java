@@ -1,6 +1,5 @@
 package D20123654;
 
-import processing.core.PApplet;
 import processing.core.PVector;
 
 public class MorphShape {
@@ -16,8 +15,6 @@ public class MorphShape {
         this.sc = sc;
     }
 
-
-    
     public void display() {
         
         sc.noFill();

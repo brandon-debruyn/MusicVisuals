@@ -3,48 +3,49 @@ package D20123654;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class SphereParticles {
 
-    // vectors by definition have magnitude and direction
+public class Particle {
+
+    // maintain vecotr magnitude and direction
     PVector position;
     PVector velocity;
 
     SceneHandler sc;
     MorphShape shape;
 
+    // particle radius and angle
     float radius;
     float angle;
     
-    public SphereParticles(float x, float y, float r, SceneHandler sc, MorphShape shape) {
+    public Particle(float x, float y, float r, SceneHandler sc, MorphShape shape) {
         this.shape = shape;
         this.sc = sc;
 
-        position = new PVector(x, y);
+        this.position = new PVector(x, y);
         PVector dir = PVector.sub(shape.position, position);
         
         
-        velocity = new PVector(1.5f * dir.normalize().x, 1.5f * dir.normalize().y);
-        velocity.mult(5);
+        this.velocity = new PVector(1.5f * dir.normalize().x, 1.5f * dir.normalize().y);
+        this.velocity.mult(5);
         
-        //velocity = new PVector(0, 0);
-
-        radius = r;
+        
+        this.radius = r;
     }
 
-    public float getParticleKE_Xi() {
-        return (0.5f * (1) * (velocity.x));
+    public float getParticleKE_Xi(float m ) {
+        return (0.5f * (m) * (velocity.x * velocity.x));
     }
 
-    public float getParticleKE_Yi() {
-        return(0.5f * (1) * (velocity.y));
+    public float getParticleKE_Yi(float m) {
+        return(0.5f * (m) * (velocity.y * velocity.y));
     }
 
     public void activate() {
+
         PVector dir = PVector.sub(shape.position, position);
         velocity.x = 1.5f * dir.normalize().x;
         velocity.y = 1.5f * dir.normalize().y;
         velocity.mult(5);
-        
     }
 
     public void checkCollision() {
@@ -53,7 +54,7 @@ public class SphereParticles {
         float distVectMag = distVect.mag();
         float pointOfCol = radius + shape.radius;
 
-        // centre shape <-> particle lossion handling
+        // centre shape <-> particle collision handling
         if(distVectMag < pointOfCol) {
             PVector distVect2 = distVect.copy();
             float distCor = ((pointOfCol-distVectMag)/2.0f);

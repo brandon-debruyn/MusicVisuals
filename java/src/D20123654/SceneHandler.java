@@ -19,7 +19,7 @@ public class SceneHandler extends Visual {
 
     float halfH = height / 2;
 
-    SphereParticles[] particles = new SphereParticles[num_particles];
+    Particle[] particles = new Particle[num_particles];
     MorphShape shape;
     JuliaGen terr;
     SolidsReformation solid;
@@ -47,12 +47,12 @@ public class SceneHandler extends Visual {
 
         for(int i=0; i<num_particles; i++) {
             if(i <= num_particles / 2) {
-                particles[i] = new SphereParticles(posx, 0.0f, particleR, this, shape);
+                particles[i] = new Particle(posx, 0.0f, particleR, this, shape);
                 posx += 2 * (width / num_particles);
             }
             else {
                 
-                particles[i] = new SphereParticles(posx, height, particleR, this, shape);
+                particles[i] = new Particle(posx, height, particleR, this, shape);
                 posx -= 2 * (width / num_particles);
             }
         }
