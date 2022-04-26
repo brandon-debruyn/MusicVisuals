@@ -19,7 +19,7 @@ public class SceneHandler extends Visual {
 
     float halfH = height / 2;
 
-    Particle[] particles = new Particle[num_particles];
+    LightsParticle[] particles = new LightsParticle[num_particles];
     MorphShape shape;
     JuliaGen terr;
     SolidsReformation solid;
@@ -44,15 +44,15 @@ public class SceneHandler extends Visual {
         
         shape = new MorphShape(width / 2, height / 2, radius, this);
         solid = new SolidsReformation(this);
-
+        
         for(int i=0; i<num_particles; i++) {
             if(i <= num_particles / 2) {
-                particles[i] = new Particle(posx, 0.0f, particleR, this, shape);
+                particles[i] = new LightsParticle(posx, 0.0f, particleR, this, shape);
                 posx += 2 * (width / num_particles);
             }
             else {
                 
-                particles[i] = new Particle(posx, height, particleR, this, shape);
+                particles[i] = new LightsParticle(posx, height, particleR, this, shape);
                 posx -= 2 * (width / num_particles);
             }
         }
@@ -143,7 +143,7 @@ public class SceneHandler extends Visual {
                 calculateFrequencyBands();
 
                 for(int j=0; j<num_particles; j++) {
-                    particles[j].updateV();
+                    particles[j].update();
                     particles[j].display();
                     particles[j].checkCollision();
                     

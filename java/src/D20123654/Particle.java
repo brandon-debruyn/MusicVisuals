@@ -4,42 +4,37 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 
-public class Particle {
+public abstract class Particle {
 
     // maintain vecotr magnitude and direction
-    PVector position;
-    PVector velocity;
+    protected PVector position;
+    protected PVector velocity;
 
-    SceneHandler sc;
-    MorphShape shape;
+    protected SceneHandler sc;
+    protected MorphShape shape;
 
     // particle radius and angle
-    float radius;
-    float angle;
+    protected float radius;
+    protected float angle;
+    
     
     public Particle(float x, float y, float r, SceneHandler sc, MorphShape shape) {
-        this.shape = shape;
         this.sc = sc;
-
-        this.position = new PVector(x, y);
-        PVector dir = PVector.sub(shape.position, position);
-        
-        
-        this.velocity = new PVector(1.5f * dir.normalize().x, 1.5f * dir.normalize().y);
-        this.velocity.mult(5);
-        
-        
+        this.shape = shape;
+        this.position = new PVector(x,y);
         this.radius = r;
     }
 
-    public float getParticleKE_Xi(float m ) {
+
+    protected float getParticleKE_X(float m ) {
         return (0.5f * (m) * (velocity.x * velocity.x));
     }
 
-    public float getParticleKE_Yi(float m) {
+    protected float getParticleKE_Y(float m) {
         return(0.5f * (m) * (velocity.y * velocity.y));
     }
 
+    // initialize vector to start with direction of shape and initial velocity
     public void activate() {
 
         PVector dir = PVector.sub(shape.position, position);
@@ -48,10 +43,16 @@ public class Particle {
         velocity.mult(5);
     }
 
+    // check colision between shape body and window border
     public void checkCollision() {
         
+        // vector subtraction to determine position of shape relative to particle
         PVector distVect = PVector.sub(shape.position, position);
+
+        // calculate the magnitude of this vector
         float distVectMag = distVect.mag();
+
+        // consider the radii of both objects
         float pointOfCol = radius + shape.radius;
 
         // centre shape <-> particle collision handling
@@ -107,30 +108,8 @@ public class Particle {
         
     }
 
-    public void updateV() {
-        position.add(velocity);
-    }
+    public abstract void update(); 
 
-    public void display() {
-        
-        float c = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.06f, 0, 255);
-        
-        sc.fill(c, 255,255);
-        sc.ellipseMode(PApplet.CENTER);
-        float newRadius = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.1f, radius, radius * 6);
-        sc.ellipse(position.x, position.y, newRadius, newRadius );
-        
-        sc.stroke(c, 255, 255);
-
-        for(int i=0; i<sc.getAudioBuffer().size(); i++) {
-            float lines = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.06f, 0, 100);
-            sc.line(position.x, position.y, PApplet.cos(position.x +  lines),PApplet.cos(position.y + lines));
-            sc.line(position.x, position.y, sc.width + PApplet.cos(position.x +  lines), sc.width + PApplet.cos(position.y + lines));
-            sc.line(position.x, position.y, sc.width + PApplet.cos(position.x +  lines),  PApplet.cos(position.y + lines));
-            sc.line(position.x, position.y, PApplet.cos(position.x +  lines), sc.height + PApplet.cos(position.y + lines));
-            
-        }
-        
-    }
+    public abstract void display();
 
 }
