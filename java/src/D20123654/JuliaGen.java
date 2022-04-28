@@ -6,7 +6,7 @@ public class JuliaGen {
 
     SceneHandler sc;
     float angle = 0;
-    int maxIterations = 25;
+    int maxIterations = 35;
     
     // f(zeta(phi)) = z^2 + c
     // zeta x, zeta y (x=> real, y=>imaginary)

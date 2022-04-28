@@ -1,73 +1,52 @@
 package D20123654;
 
+import java.util.ArrayList;
+
 import ie.tudublin.Visual;
-
-import com.jogamp.graph.geom.Vertex;
-
-import ddf.minim.AudioBuffer;
-import ddf.minim.analysis.FFT;
 
 public class SceneHandler extends Visual {
 
+    // menu vars
     int mode = 1;
     boolean paused = false;
 
-    float[] lerpedBuffer;
-    float y = 0;
-    float smoothedY = 0;
-    float smoothedAmplitude = 0;
-    int num_particles = 10;
-    float radius = 400;
-    float particleR = 12;
+    // particle radius 
+    float particleR = 25;
 
-    float halfH = height / 2;
-
-    LightsParticle[] particles = new LightsParticle[num_particles];
+    ArrayList<LightsParticle> particles = new ArrayList<LightsParticle>();
     MorphShape shape;
     JuliaGen terr;
     SolidsReformation solid;
     VertexMayhem vertexMayhem;
     
     public void settings() {
-        size(800, 800, P3D);
-
+        size(900, 900, P3D);
     }
 
     public void setup() {
-    
+        
+        // load audio
         startMinim();
         loadAudio("myMusic.mp3");
 
         colorMode(HSB);
+
+        // create objects
         terr = new JuliaGen(this);
-        
-        //noCursor();
-        
-        lerpedBuffer = new float[width];
-        int posx = width / num_particles;
-        
-        shape = new MorphShape(width / 2, height / 2, radius, this);
+        shape = new MorphShape(width / 2, height / 2, this);
         solid = new SolidsReformation(this);
         vertexMayhem = new VertexMayhem(this);
+    }
 
-        for(int i=0; i<num_particles; i++) {
-            if(i <= num_particles / 2) {
-                particles[i] = new LightsParticle(posx, 0.0f, particleR, this, shape);
-                posx += 2 * (width / num_particles);
-            }
-            else {
-                
-                particles[i] = new LightsParticle(posx, height, particleR, this, shape);
-                posx -= 2 * (width / num_particles);
-            }
-        }
-        
+    public void mousePressed() {
 
-        
-        
-        
+        // spawn particle on click
+        particles.add(new LightsParticle(mouseX, mouseY, particleR, this, shape));
+
+
     }
     
+    // handle scenes
     public void keyPressed()
     {
         if (key >= '0' && key <= '4') {
@@ -90,43 +69,12 @@ public class SceneHandler extends Visual {
                 break;
             }
 
-            case '1':
-            {
-                getAudioPlayer().cue(0);
-                getAudioPlayer().play();
-                break;
-
-            }
-
-            case '2':
-            {
-                getAudioPlayer().cue(22500);
-                getAudioPlayer().play();
-                break;
-            }
-
-            case '3':
-            {
-                getAudioPlayer().cue(112000);
-                getAudioPlayer().play();
-                break;
-            }
-
-            case '4':
-            {
-                getAudioPlayer().cue(162000);
-                getAudioPlayer().play();
-                break;
-            }
-            
          }
     }
 
-    int p = 0;
-
     public void draw() {
-
         
+        // switch statement for scenes
         switch(mode)
         {
             case 1: {
@@ -135,19 +83,18 @@ public class SceneHandler extends Visual {
                 background(0);
                 
                 calculateAverageAmplitude();
+                for(int j=0; j<particles.size(); j++) {
+                    particles.get(j).update();
+                    particles.get(j).display();
+                    particles.get(j).checkCollision();
+                    
+                }
+
                 float newRadius = map(getSmoothedAmplitude(), 0, 0.6f, 70, 255);
                 shape.radius = newRadius;
                 shape.display();
-               
 
                 
-
-                for(int j=0; j<num_particles; j++) {
-                    particles[j].update();
-                    particles[j].display();
-                    particles[j].checkCollision();
-                    
-                }
                 break;
             }
             case 2: {

@@ -21,10 +21,9 @@ public abstract class Particle {
     public Particle(float x, float y, float r, SceneHandler sc, MorphShape shape) {
         this.sc = sc;
         this.shape = shape;
-        this.position = new PVector(x,y, 0);
+        this.position = new PVector(x, y, 0);
         this.radius = r;
     }
-
 
     protected float getParticleKE_X(float m ) {
         return (0.5f * (m) * (velocity.x * velocity.x));
@@ -40,7 +39,7 @@ public abstract class Particle {
         PVector dir = PVector.sub(shape.position, position);
         velocity.x = 1.5f * dir.normalize().x;
         velocity.y = 1.5f * dir.normalize().y;
-        velocity.mult(5);
+        velocity.mult(4);
     }
 
     // check colision between shape body and window border
@@ -68,21 +67,22 @@ public abstract class Particle {
             float s = PApplet.sin(angle);
             float c = PApplet.cos(angle);
 
+            velocity.x = 1.15f * (c * velocity.x + s * velocity.y); 
+            velocity.y = 1.15f * (c * velocity.y - s * velocity.x);
 
-            velocity.x = 1.35f * (c * velocity.x + s * velocity.y); 
-            velocity.y = 1.35f * (c * velocity.y - s * velocity.x);
-
+            // handle max and min velocity limits
             if(Math.abs(velocity.x) >= 90 || Math.abs(velocity.y) >= 90) {
                 velocity.x = velocity.x * 0.10f;
                 velocity.y = velocity.y * 0.10f;
             }
-            else if(Math.abs(velocity.x) <= 5 && Math.abs(velocity.y) >= -5) {
+            else if(Math.abs(velocity.x) <= 10 && Math.abs(velocity.y) >= -10) {
                 velocity.x = velocity.x * 2.10f;
                 velocity.y = velocity.y * 2.10f;
             }
 
         }
-        // border collision
+
+        // check border collision and flip velocity
         if (position.x > sc.width-radius) {
 
             position.x = sc.width-radius;

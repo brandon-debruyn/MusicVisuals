@@ -1,9 +1,8 @@
 package ie.tudublin;
 
 import D20123654.SceneHandler;
-import example.CubeVisual;
 import example.MyVisual;
-import example.RotatingAudioBands;
+
 
 public class Main
 {	
@@ -21,8 +20,7 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		Main main = new Main();
-		//main.startUI();			
+		Main main = new Main();		
 
 		main.sceneHandler();
 	}
