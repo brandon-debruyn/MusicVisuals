@@ -1,5 +1,6 @@
 package D20123654;
 
+import processing.core.PApplet;
 import processing.core.PVector;
 
 public class MorphShape {
@@ -16,7 +17,8 @@ public class MorphShape {
     }
 
     public void display() {
-        
+        sc.calculateAverageAmplitude();
+        float newRadius = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.8f, 70, 350);
         sc.noFill();
         sc.stroke(sc.frameCount % 255, 255,255);
         
@@ -27,7 +29,7 @@ public class MorphShape {
         sc.rotateX(angle);
         sc.rotateZ(angle);
         
-        sc.sphere(radius);
+        sc.sphere(newRadius);
 
         sc.popMatrix();
 

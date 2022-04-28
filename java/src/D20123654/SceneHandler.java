@@ -1,6 +1,9 @@
 package D20123654;
 
 import ie.tudublin.Visual;
+
+import com.jogamp.graph.geom.Vertex;
+
 import ddf.minim.AudioBuffer;
 import ddf.minim.analysis.FFT;
 
@@ -23,6 +26,7 @@ public class SceneHandler extends Visual {
     MorphShape shape;
     JuliaGen terr;
     SolidsReformation solid;
+    VertexMayhem vertexMayhem;
     
     public void settings() {
         size(800, 800, P3D);
@@ -44,7 +48,8 @@ public class SceneHandler extends Visual {
         
         shape = new MorphShape(width / 2, height / 2, radius, this);
         solid = new SolidsReformation(this);
-        
+        vertexMayhem = new VertexMayhem(this);
+
         for(int i=0; i<num_particles; i++) {
             if(i <= num_particles / 2) {
                 particles[i] = new LightsParticle(posx, 0.0f, particleR, this, shape);
@@ -120,12 +125,7 @@ public class SceneHandler extends Visual {
     int p = 0;
 
     public void draw() {
-        //(\sqrt{(\sqrt{(x*\sin(b)+a*\cos(b))^{2}+(y*\cos(d)-c*\sin(d))^{2}}-4)^{2}+(y*\sin(d)+c*\cos(d))^{2}}-2)^{2}+(x*\cos(b)-a*\sin(b))^{2}=1
-        
-        
-        getFFT().window(FFT.HAMMING);
-        getFFT().forward(getAudioBuffer());
-       
+
         
         switch(mode)
         {
@@ -136,11 +136,11 @@ public class SceneHandler extends Visual {
                 
                 calculateAverageAmplitude();
                 float newRadius = map(getSmoothedAmplitude(), 0, 0.6f, 70, 255);
-                    shape.radius = newRadius;
-                    shape.display();
+                shape.radius = newRadius;
+                shape.display();
                
 
-                calculateFrequencyBands();
+                
 
                 for(int j=0; j<num_particles; j++) {
                     particles[j].update();
@@ -161,7 +161,8 @@ public class SceneHandler extends Visual {
                 break;
             }
             case 4: {
-                
+                vertexMayhem.setupShape();
+                vertexMayhem.display();
                 break;
             }
         }

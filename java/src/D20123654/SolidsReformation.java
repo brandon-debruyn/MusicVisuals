@@ -45,6 +45,7 @@ public class SolidsReformation {
                 sc.ellipse(x,  y, rad, rad);
                 sc.rect(x, y, x + (rad / 10), y + (rad / 10));
                 sc.line(x, y,  PApplet.cos(x + rad), PApplet.cos(y + rad));
+
                 
                 float n2 = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.8f, -0.35f, 0.5f);
 

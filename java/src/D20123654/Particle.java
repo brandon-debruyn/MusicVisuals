@@ -21,7 +21,7 @@ public abstract class Particle {
     public Particle(float x, float y, float r, SceneHandler sc, MorphShape shape) {
         this.sc = sc;
         this.shape = shape;
-        this.position = new PVector(x,y);
+        this.position = new PVector(x,y, 0);
         this.radius = r;
     }
 
