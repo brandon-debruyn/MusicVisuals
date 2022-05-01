@@ -120,8 +120,6 @@ public class VertexMayhem {
             // end custom shape
             sc.endShape();
         }
-        // increment rotation angle
-        //angle += 0.01f;
     }
     
 }

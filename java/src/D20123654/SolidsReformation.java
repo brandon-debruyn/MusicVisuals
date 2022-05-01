@@ -47,7 +47,7 @@ public class SolidsReformation {
                 sc.line(x, y,  PApplet.cos(x + rad), PApplet.cos(y + rad));
 
                 
-                float n2 = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.8f, -0.05f, 0.5f);
+                float n2 = PApplet.map(sc.getSmoothedAmplitude(), 0, 0.8f, -0.1f, 0.5f);
 
                 if(n < -0.75f) {
                     n = -0.2f;

@@ -43,24 +43,27 @@ public class SceneHandler extends Visual {
         // spawn particle on click
         particles.add(new LightsParticle(mouseX, mouseY, particleR, this, shape));
 
-
     }
     
-    // handle scenes
+    
     public void keyPressed()
     {
+        // handle scenes and music
         if (key >= '0' && key <= '4') {
 			mode = key - '0';
 		}
         switch(key)
         {
+            // if space is pressed
             case ' ':
             {
+                // play the music
                 if(paused)
                 {
                     getAudioPlayer().play();
                     paused = false;
                 }
+                // pause the music
                 else
                 {
                     getAudioPlayer().pause();
@@ -68,17 +71,32 @@ public class SceneHandler extends Visual {
                 }
                 break;
             }
-
+            // if r is pressed
+            case 'r':
+            {
+                // reset the music
+                getAudioPlayer().cue(0);
+                
+                // play it automatically if paused is false
+                if(!paused) {
+                    getAudioPlayer().play();
+                }
+                // otherwise pause it
+                else {
+                    getAudioPlayer().pause();
+                }
+                
+            }
          }
     }
 
     public void draw() {
         
-        // switch statement for scenes
+        // switch statement for scene selection
         switch(mode)
         {
             case 1: {
-                getAudioPlayer().play();
+                //getAudioPlayer().play();
 
                 background(0);
                 
@@ -87,23 +105,20 @@ public class SceneHandler extends Visual {
                     particles.get(j).update();
                     particles.get(j).display();
                     particles.get(j).checkCollision();
-                    
                 }
 
                 float newRadius = map(getSmoothedAmplitude(), 0, 0.6f, 70, 255);
                 shape.radius = newRadius;
                 shape.display();
-
-                
                 break;
             }
             case 2: {
-                // background(0);
+                
                 terr.display();
                 break;
             }
             case 3: {
-                //background(0);
+                
                 solid.display();
                 break;
             }
@@ -113,6 +128,5 @@ public class SceneHandler extends Visual {
                 break;
             }
         }
-
     }
 }
