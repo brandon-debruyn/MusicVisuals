@@ -25,6 +25,7 @@ This is an Assignment for Object Orientated Programming in Year 2 semester 2 wri
 | SPACE | Pause and Play music |
 | Left Click | (on scene MorphShape with Light Particles) spawn particles |
 | R | Restarts the music |
+| ----------|-----------|
 | Keys | Scenes |
 |-----------|-----------|
 | 1 | MorphShape with Light Particles |
