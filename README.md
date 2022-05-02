@@ -12,7 +12,7 @@ Student Number: D20123654
 - Check out the WaveForm and AudioBandsVisual for examples of how to call the Processing functions from other classes that are not subclasses of PApplet
 
 # Description of the assignment
-This is an Assignment for Object Orientated Programming in Year 2 semester 2 written in Java using the [Processing Library](https://processing.org/). This is the final project for the module and is all about visual and audio responsiveness. I selected the song Victor [Consciousness by Ruiz & Alex Stein](https://www.youtube.com/watch?v=9GETplRhgak) as it has a variety of different beats and soung progression.
+This is an Assignment for Object Orientated Programming in Year 2 semester 2 written in Java using the [Processing Library](https://processing.org/). This is the final project for the module and is all about visual and audio responsiveness. I selected the song Victor [Consciousness by Ruiz & Alex Stein](https://www.youtube.com/watch?v=9GETplRhgak) as it has a variety of different beats and sound progression.
 
 # Youtubue Video
 
@@ -30,7 +30,7 @@ This is an Assignment for Object Orientated Programming in Year 2 semester 2 wri
 | 1 | MorphShape with Light Particles |
 | 2 | Responsive Julia Sets |
 | 3 | Forms Mayhem |
-| 4 | Gray's Klein Bottle (but not so gray after all) |
+| 4 | Gray's Klein Bottle |
 
 # How it works
 
